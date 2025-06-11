@@ -1,0 +1,6 @@
+﻿services:
+  aspbase:
+    image: aspbase
+    build:
+      context: .
+      dockerfile: AspBase/Dockerfile
