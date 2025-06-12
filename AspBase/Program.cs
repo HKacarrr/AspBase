@@ -1,12 +1,19 @@
+using AspBase.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
 
+// Entity and Repository configuration
+builder.Services.ConfigureSqlContext(builder.Configuration);
+
+
 // Swagger middleware
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 
 var app = builder.Build();
