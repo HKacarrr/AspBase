@@ -2,6 +2,8 @@ using System.Reflection;
 using Entities.Common;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+
 namespace Repositories.Config.Context;
 
 public class RepositoryContext : IdentityDbContext
@@ -16,35 +18,29 @@ public class RepositoryContext : IdentityDbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
-    
-    
-    private void SetDatetimeData()
+
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        var entries = ChangeTracker
-            .Entries()
-            .Where(e => e.Entity is DatetimeProvider &&
-                        (e.State == EntityState.Added || e.State == EntityState.Modified));
-
+        var entries = GetEntries();
         foreach (var entry in entries)
-        {
-            var entity = (DatetimeProvider)entry.Entity;
+            SetDatetimeColumns(entry);
 
-            if (entry.State == EntityState.Added)
-                entity.CreatedAt = DateTime.UtcNow;
+        return base.SaveChangesAsync(cancellationToken);
+    }
 
-            entity.UpdatedAt = DateTime.UtcNow;
-        }
+    private void SetDatetimeColumns(EntityEntry entry)
+    {
+        if (entry.Entity is not DatetimeProvider entity) return;
+        if (entry.State == EntityState.Added)
+            entity.CreatedAt = DateTime.UtcNow;
 
-        var softDeletedEntries = ChangeTracker
-            .Entries()
-            .Where(e => e.Entity is SoftDeleteProvider && e.State == EntityState.Deleted);
+        entity.UpdatedAt = DateTime.UtcNow;
+    }
 
-        foreach (var entry in softDeletedEntries)
-        {
-            entry.State = EntityState.Modified;
-            var entity = (SoftDeleteProvider)entry.Entity;
-            entity.IsDeleted = true;
-            entity.DeletedAt = DateTime.UtcNow;
-        }
+    private IEnumerable<EntityEntry> GetEntries()
+    {
+        return ChangeTracker.Entries()
+            .Where(e => e.Entity is DatetimeProvider && e.State == EntityState.Added || e.State == EntityState.Modified);
     }
 }

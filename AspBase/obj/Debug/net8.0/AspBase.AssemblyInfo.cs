@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AspBase")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2e0dd42a53bc0b19ffdedf62cbdc98a51ed67a6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e5b8688ed91ccb6ffa9aff38baf3772b787f4476")]
 [assembly: System.Reflection.AssemblyProductAttribute("AspBase")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AspBase")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
