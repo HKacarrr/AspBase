@@ -1,11 +1,11 @@
-using Microsoft.EntityFrameworkCore;
+using Repositories.Config.Context;
 
 namespace Repositories.Product;
 using Entities.Product;
 
-public class ProductRepository : AbstractRepository<Product>, IProductRepository
+public sealed class ProductRepository : AbstractRepository<Product>
 {
-    public ProductRepository(DbContext context) : base(context)
+    public ProductRepository(RepositoryContext context) : base(context)
     {
     }
 }

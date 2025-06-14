@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "lARNlOjYPyQ5yKwIQj4gePToCCmPOsMKJGIegR2w1RQ=",
+  "Hash": "+IQ+hNT0Pbxbk3xjKONi/+SuUk5uGz2tQomZcMHVjP8=",
   "Source": "AspBase",
   "BasePath": "_content/AspBase",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "AspBase/wwwroot",
+      "Source": "AspBase",
+      "ContentRoot": "/Users/hasankacar/Desktop/ASP/AspBase/AspBase/wwwroot/",
+      "BasePath": "_content/AspBase",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }

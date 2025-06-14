@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Repositories.Config.Context;
 
 namespace Repositories;
 
@@ -8,7 +9,7 @@ public abstract class AbstractRepository<T>  : IBaseRepository<T> where T : clas
     protected readonly DbContext Context;
     protected readonly DbSet<T> DbSet;
 
-    public AbstractRepository(DbContext context)
+    public AbstractRepository(RepositoryContext context)
     {
         Context = context;
         DbSet = Context.Set<T>();

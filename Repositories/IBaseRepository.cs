@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 
 namespace Repositories;
 
-public interface IBaseRepository<T> where T : class
+public interface IBaseRepository<T>
 {
     Task<List<T>> FindAllAsync();
     

@@ -3,11 +3,16 @@ using AspBase.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+// builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
 
 // Entity and Repository configuration
 builder.Services.ConfigureSqlContext(builder.Configuration);
+builder.Services.RegisterRepositories();
+
+// Services Configuration
+builder.Services.ConfigureServices();
+builder.Services.RegisterServices();
 
 
 // Swagger middleware
@@ -30,7 +35,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+// app.UseStaticFiles();
 
 app.UseRouting();
 
