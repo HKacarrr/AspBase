@@ -13,4 +13,9 @@ public class ProductService : AbstractService<Product>
     {
         return await Repository.FindAllAsync();
     }
+
+    // public async Task<Product> CreateProduct()
+    // {
+    //     
+    // }
 }
