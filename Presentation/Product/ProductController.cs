@@ -1,3 +1,4 @@
+using Entities.DTO.Product;
 using Microsoft.AspNetCore.Mvc;
 using Services.Config;
 
@@ -15,7 +16,7 @@ public class ProductController : AbstractProductController
 
     
     [HttpGet]
-    public async Task<List<Entities.Product.Product>> List()
+    public async Task<IEnumerable<ProductDto>> List()
     {
         return await _serviceManager.ProductService.ProductList();
     }

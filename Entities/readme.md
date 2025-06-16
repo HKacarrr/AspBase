@@ -44,3 +44,20 @@ public DbSet<Entities.User.Profile> Profile { get; set; }
 public DbSet<Entities.User.Detail> Detail { get; set; }
 
 public DbSet<Entities.Product.Product> Product { get; set; }
+```
+
+
+### ⚙️ DTO Yapıs ile Entegrasyon
+
+Eklenen her entity için bir DTO oluşmalı ve DTO klasörü altında entity içindeki gibi bir dosya-klasör yapısı hazırlanmalı. 
+Eklenen her DTO 🗂 AspBase/Utilities/MappingProfile içerisinde map edilmeli. 
+NOT : ReverseMap() işlemi tek seferde 2 map işlemini kapsar. Yani;
+
+    CreateMap<ProductDto, Product>(); 
+    CreateMap<Product, ProductDto>();
+
+değerlerini yazmak yerine sadece;
+  
+    CreateMap<ProductDto, Product>().ReverseMap();
+
+yazılabilir. Sadece DTO içeriği ile entity birebir eşleşmiyorsa o zaman kullanılması doğru değildir. 🚨 ÖNERİLMİYOR

@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 // Entity and Repository configuration
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.RegisterRepositories();
+builder.Services.AddAutoMapper(typeof(Program).Assembly); // For DTO map with entity structures
 
 // Services Configuration
 builder.Services.ConfigureServices();

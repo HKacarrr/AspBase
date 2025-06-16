@@ -1,3 +1,5 @@
+using AutoMapper;
+using Entities.DTO.Product;
 using Repositories.Product;
 
 namespace Services.Product;
@@ -6,7 +8,7 @@ using Entities.Product;
 public class ProductService : AbstractService<Product>
 {
     /** Constructor */
-    public ProductService(ProductRepository repository) : base(repository)
+    public ProductService(ProductRepository repository, IMapper mapper) : base(repository, mapper)
     {
     }
 
@@ -16,9 +18,10 @@ public class ProductService : AbstractService<Product>
 
     
     /** Functions */
-    public async Task<List<Product>> ProductList()
+    public async Task<IEnumerable<ProductDto>> ProductList()
     {
-        return await Repository.FindAllAsync();
+        var products = await Repository.FindAllAsync();
+        return Mapper.Map<IEnumerable<ProductDto>>(products);
     }
 
     // public async Task<Product> CreateProduct()
