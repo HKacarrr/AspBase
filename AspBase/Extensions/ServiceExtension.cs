@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Config;
 using Repositories.Config.Context;
@@ -30,5 +32,28 @@ public static class ServiceExtension
     public static void RegisterServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<ProductService, ProductService>();
+    }
+    
+    
+    
+    public static void AddCustomMediaTypes(this IServiceCollection services)
+    {
+        services.Configure<MvcOptions>(config =>
+        {
+            var systemTextJsonOutputFormatter = config.OutputFormatters.OfType<SystemTextJsonOutputFormatter>()?.FirstOrDefault();
+            if (systemTextJsonOutputFormatter is not null)
+            {
+                systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.hksoftdev.hateoas+json");
+                systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.btkakademi.apiroot+json");
+            }
+
+
+            var xmlOutputFormatter = config.OutputFormatters.OfType<XmlDataContractSerializerOutputFormatter>()?.FirstOrDefault();
+            if (xmlOutputFormatter is not null)
+            {
+                xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.hksoftdev.hateoas+xml");
+                xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.btkakademi.apiroot+xml");
+            }
+        });
     }
 }

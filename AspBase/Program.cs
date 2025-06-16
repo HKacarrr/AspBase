@@ -1,4 +1,5 @@
 using AspBase.Extensions;
+using AspBase.Extensions.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,10 @@ builder.Services.ConfigureServices();
 builder.Services.RegisterServices();
 
 
+// Output
+builder.Services.AddCustomMediaTypes();
+
+
 // Swagger middleware
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -23,6 +28,9 @@ builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
+
+// Middlewares
+app.ConfigureExceptionHandler();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
