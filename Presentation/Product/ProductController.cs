@@ -24,7 +24,7 @@ public class ProductController : AbstractProductController
     
     
     [HttpPost]
-    public async Task<IActionResult> Create(ProductDto productDto)
+    public async Task<IActionResult> Create(CreateProductDto productDto)
     {
         var product = await _serviceManager.ProductService.CreateProduct(productDto);
         return Ok(product);

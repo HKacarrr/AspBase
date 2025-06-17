@@ -2,5 +2,10 @@ namespace Entities.Common;
 
 public abstract class PrimaryKeyProvider
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
+    
+    protected PrimaryKeyProvider()
+    {
+        Id = Guid.NewGuid();
+    }
 }

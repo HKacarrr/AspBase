@@ -1,5 +1,6 @@
 using System.Reflection;
 using Entities.Common;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -17,6 +18,10 @@ public class RepositoryContext : IdentityDbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        
+        // Schemas 
+        ConfigureDatabaseSchemas(modelBuilder);
+        
     }
 
 
@@ -42,5 +47,36 @@ public class RepositoryContext : IdentityDbContext
     {
         return ChangeTracker.Entries()
             .Where(e => e.Entity is DatetimeProvider && e.State == EntityState.Added || e.State == EntityState.Modified);
+    }
+
+
+    
+    /** Schemas Settings */
+    private void ConfigureDatabaseSchemas(ModelBuilder modelBuilder)
+    {
+        ConfigureProductSchemas(modelBuilder);
+        ConfigureUserSchemas(modelBuilder);
+        ConfigureRoleSchemas(modelBuilder);
+    }
+
+    private void ConfigureUserSchemas(ModelBuilder modelBuilder)
+    {
+        var schema = "a_user";
+        modelBuilder.Entity<IdentityUser>(b => b.ToTable("AspNetUsers", schema));
+        modelBuilder.Entity<IdentityUserClaim<string>>(b => b.ToTable("AspNetUserClaims", schema));
+        modelBuilder.Entity<IdentityUserLogin<string>>(b => b.ToTable("AspNetUserLogins", schema));
+        modelBuilder.Entity<IdentityRoleClaim<string>>(b => b.ToTable("AspNetRoleClaims", schema));
+        modelBuilder.Entity<IdentityUserToken<string>>(b => b.ToTable("AspNetUserTokens", schema));
+    }
+    
+    private void ConfigureRoleSchemas(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<IdentityRole>(b => b.ToTable("AspNetRoles", "a_roles"));
+        modelBuilder.Entity<IdentityUserRole<string>>(b => b.ToTable("AspNetUserRoles", "a_roles"));
+    }
+    
+    private void ConfigureProductSchemas(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Entities.Product.Product>().ToTable("product", "product");
     }
 }

@@ -22,13 +22,13 @@ public class ProductService : AbstractService<Product>
     }
     
 
-    public async Task<ProductDto> CreateProduct(ProductDto productDto)
+    public async Task<CreateProductDto> CreateProduct(CreateProductDto createProductDto)
     {
-        var product = Mapper.Map<Product>(productDto);
+        var product = Mapper.Map<Product>(createProductDto);
         await Repository.AddAsync(product);
         Repository.SaveAsync();
 
-        return Mapper.Map<ProductDto>(product);
+        return Mapper.Map<CreateProductDto>(product);
     }
     
 
