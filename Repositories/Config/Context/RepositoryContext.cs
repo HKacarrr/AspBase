@@ -12,7 +12,12 @@ public class RepositoryContext : IdentityDbContext
     public RepositoryContext(DbContextOptions options) : base(options)
     {}
     
+    
+    /** Entity Set with DbSet */
     public DbSet<Entities.Product.Product> Product { get; set; }
+    public DbSet<Entities.Category.Category> Category { get; set; }
+    /** */
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -77,6 +82,12 @@ public class RepositoryContext : IdentityDbContext
     
     private void ConfigureProductSchemas(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Entities.Product.Product>().ToTable("product", "product");
+        modelBuilder.Entity<Entities.Product.Product>().ToTable("product", "p_product");
+    }
+    
+    
+    private void ConfigureCategorySchemas(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Entities.Category.Category>().ToTable("category", "c_category");
     }
 }
