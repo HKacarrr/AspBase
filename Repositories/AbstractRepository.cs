@@ -50,8 +50,8 @@ public abstract class AbstractRepository<T>  : IBaseRepository<T> where T : clas
         DbSet.Remove(entity);
     }
 
-    public virtual async Task<bool> SaveAsync()
+    public virtual void SaveAsync()
     {
-        return await Context.SaveChangesAsync() > 0;
+        Context.SaveChangesAsync();
     }
 }

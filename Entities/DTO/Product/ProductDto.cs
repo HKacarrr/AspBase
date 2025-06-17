@@ -16,4 +16,10 @@ public record ProductDto : AbstractDto
     [Required(ErrorMessage = "Price is required")]
     [Range(10, 1000, ErrorMessage = "Price must be between 10 and 1000 values")]
     public decimal? Price { get; init; }
+    
+    
+    public DateTime CreatedAt { get; init; }
+    
+    
+    public DateTime UpdatedAt { get; init; }
 }

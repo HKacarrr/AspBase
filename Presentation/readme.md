@@ -64,3 +64,9 @@ Api/
         └── ProductController.cs       --> Gerçekleşen işlemler
 
 Route: api/workspace/product
+```
+
+#### ℹ️ TRY-CATCH KULLANIMI
+
+Controller içerisinde çok fazla try-catch kullanmamaya çalışmalıyız.
+Eğer try-catch kullanırsak global middleware devre dışı kalmış olur.

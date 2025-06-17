@@ -61,3 +61,6 @@ değerlerini yazmak yerine sadece;
     CreateMap<ProductDto, Product>().ReverseMap();
 
 yazılabilir. Sadece DTO içeriği ile entity birebir eşleşmiyorsa o zaman kullanılması doğru değildir. 🚨 ÖNERİLMİYOR
+
+ℹ️ DTO yapısında en önemli konulardan biri de role göre serialize etme işlemi. Her rol için bir DTO oluşturulabilir. Servis
+içerisinde role göre DTO map işlemi yapılır. 

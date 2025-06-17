@@ -1,5 +1,6 @@
 using AutoMapper;
 using Entities.DTO.Product;
+using Entities.Exceptions;
 using Repositories.Product;
 
 namespace Services.Product;
@@ -13,19 +14,54 @@ public class ProductService : AbstractService<Product>
     }
 
     
-    /** Repositories */
-    public ProductRepository ProductRepository => (ProductRepository)Repository;
-
-    
     /** Functions */
     public async Task<IEnumerable<ProductDto>> ProductList()
     {
         var products = await Repository.FindAllAsync();
         return Mapper.Map<IEnumerable<ProductDto>>(products);
     }
+    
 
-    // public async Task<Product> CreateProduct()
-    // {
-    //     
-    // }
+    public async Task<ProductDto> CreateProduct(ProductDto productDto)
+    {
+        var product = Mapper.Map<Product>(productDto);
+        await Repository.AddAsync(product);
+        Repository.SaveAsync();
+
+        return Mapper.Map<ProductDto>(product);
+    }
+    
+
+    public async Task<ProductDto> GetProductById(int id)
+    {
+        var product = await CheckProduct(id);
+        return Mapper.Map<ProductDto>(product);
+    }
+
+
+    public async Task UpdateProduct(int id, ProductDto productDto)
+    {
+        var updatingProduct = await CheckProduct(id);
+        Mapper.Map(productDto, updatingProduct);
+        Repository.Update(updatingProduct);
+        Repository.SaveAsync();
+    }
+
+
+    public async Task DeleteProduct(int id)
+    {
+        var deletingProduct = await CheckProduct(id);
+        Repository.Delete(deletingProduct);
+        Repository.SaveAsync();
+    }
+
+
+    private async Task<Product> CheckProduct(int id)
+    {
+        var product = await Repository.FindOneByAsync(p => p.Id.Equals(id));
+        if (product is null)
+            throw new Exception("Product is not found!");
+
+        return product;
+    }
 }

@@ -13,42 +13,29 @@ public static class ExceptionExtensionMiddleware
         {
             appError.Run(async context =>
             {
-                context.Response.ContentType = "application/problem+json";
+                // context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                context.Response.ContentType = "application/json";
 
                 var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                Console.WriteLine("Test Deneme");
                 if (contextFeature is not null)
                 {
-                    var error = contextFeature.Error;
-                    
-                    // StatusCode belirle
-                    var statusCode = error switch
+                    /** Status code değerinin dinamik olarak alınması */
+                    context.Response.StatusCode = contextFeature.Error switch
                     {
                         NotFoundException => StatusCodes.Status404NotFound,
-                        UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
                         _ => StatusCodes.Status500InternalServerError
                     };
-
-                    context.Response.StatusCode = statusCode;
-
-                    var problemDetails = new ProblemDetails
+                    /** */
+                    
+                    // logger.LogError("An error occured!");
+                    await context.Response.WriteAsync(new ErrorDetail()
                     {
-                        Status = statusCode,
-                        Title = GetDefaultTitle(statusCode),
-                        Detail = error.Message,
-                        Instance = context.Request.Path
-                    };
-
-                    await context.Response.WriteAsJsonAsync(problemDetails);
+                        StatusCode = context.Response.StatusCode,
+                        Message = contextFeature.Error.Message
+                    }.ToString());
                 }
             });
         });
     }
-
-    private static string GetDefaultTitle(int statusCode) => statusCode switch
-    {
-        StatusCodes.Status404NotFound => "Resource Not Found",
-        StatusCodes.Status401Unauthorized => "Unauthorized",
-        StatusCodes.Status500InternalServerError => "Internal Server Error",
-        _ => "Unexpected Error"
-    };
 }

@@ -16,41 +16,41 @@ public class ProductController : AbstractProductController
 
     
     [HttpGet]
-    public async Task<IEnumerable<ProductDto>> List()
+    public async Task<IActionResult> List()
     {
-        return await _serviceManager.ProductService.ProductList();
-    }
-    
-    
-    [HttpPost]
-    public async Task<IActionResult> Create()
-    {
-        var products = await _serviceManager.ProductService.ProductRepository.FindAllAsync();
-        // var products = await _serviceManager.ProductService.ProductList();
+        var products = await _serviceManager.ProductService.ProductList();
         return Ok(products);
     }
     
     
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> Read()
+    [HttpPost]
+    public async Task<IActionResult> Create(ProductDto productDto)
     {
-        var product = await _serviceManager.ProductService.ProductList();
-        return Ok();
+        var product = await _serviceManager.ProductService.CreateProduct(productDto);
+        return Ok(product);
+    }
+    
+    
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> Read([FromRoute]int id)
+    {
+        var product = await _serviceManager.ProductService.GetProductById(id);
+        return Ok(product);
     }
     
     
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, [FromBody] Entities.Product.Product updatingProduct)
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] ProductDto productDto)
     {
-        var product = await _serviceManager.ProductService.ProductList();
-        return Ok();
+        await _serviceManager.ProductService.UpdateProduct(id, productDto);
+        return Ok(productDto);
     }
     
     
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var product = await _serviceManager.ProductService.ProductList();
+        await _serviceManager.ProductService.DeleteProduct(id);
         return Ok();
     }
 }
