@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Category;
 
-[Route("category")]
+[Route("categories")]
 public abstract class AbstractCategoryController : AbstractController
 {
     

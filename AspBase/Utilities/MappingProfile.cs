@@ -1,4 +1,6 @@
 using AutoMapper;
+using Entities.Category;
+using Entities.DTO.Category;
 using Entities.DTO.Product;
 using Entities.Product;
 
@@ -10,5 +12,8 @@ public class MappingProfile : Profile
     {
         CreateMap<ProductDto, Product>().ReverseMap();
         CreateMap<CreateProductDto, Product>().ReverseMap();
+        
+        CreateMap<CategoryDto, Category>().ReverseMap();
+        CreateMap<CreateCategoryDto, Category>().ReverseMap();
     }
 }

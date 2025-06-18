@@ -62,6 +62,7 @@ public class RepositoryContext : IdentityDbContext
         ConfigureProductSchemas(modelBuilder);
         ConfigureUserSchemas(modelBuilder);
         ConfigureRoleSchemas(modelBuilder);
+        ConfigureCategorySchemas(modelBuilder);
     }
 
     private void ConfigureUserSchemas(ModelBuilder modelBuilder)

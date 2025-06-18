@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
+using Repositories;
+using Repositories.Category;
 using Repositories.Config;
 using Repositories.Config.Context;
 using Repositories.Product;
+using Services.Category;
 using Services.Config;
 using Services.Product;
 
@@ -21,6 +24,7 @@ public static class ServiceExtension
     {
         serviceCollection.AddScoped<RepositoryManager>();
         serviceCollection.AddScoped<ProductRepository>();
+        serviceCollection.AddScoped<CategoryRepository>();
     }
 
 
@@ -32,6 +36,7 @@ public static class ServiceExtension
     public static void RegisterServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<ProductService, ProductService>();
+        serviceCollection.AddScoped<CategoryService, CategoryService>();
     }
     
     

@@ -18,34 +18,39 @@ public class CategoryController : AbstractCategoryController
     [HttpGet]
     public async Task<IActionResult> List()
     {
-        return Ok();
+        var categories = await _serviceManager.CategoryService.CategoryList();
+        return Ok(categories);
     }
 
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateCategoryDto createCategoryDto)
     {
-        return Ok();
+        var category = await _serviceManager.CategoryService.CreateCategory(createCategoryDto);
+        return Ok(category);
     }
     
     
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> Read([FromRoute] int id)
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> Read([FromRoute] Guid id)
     {
-        return Ok();
+        var category = await _serviceManager.CategoryService.GetCategoryById(id);
+        return Ok(category);
     }
     
     
-    [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] CreateCategoryDto createCategoryDto)
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] CreateCategoryDto createCategoryDto)
     {
-        return Ok();
+        var category = await _serviceManager.CategoryService.UpdateCategory(id, createCategoryDto);
+        return Ok(category);
     }
     
     
-    [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete([FromRoute] int id)
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
+        await _serviceManager.CategoryService.DeleteCategory(id);
         return Ok();
     }
 }

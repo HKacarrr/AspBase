@@ -31,24 +31,24 @@ public class ProductController : AbstractProductController
     }
     
     
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> Read([FromRoute]int id)
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> Read([FromRoute] Guid id)
     {
         var product = await _serviceManager.ProductService.GetProductById(id);
         return Ok(product);
     }
     
     
-    [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] ProductDto productDto)
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] ProductDto productDto)
     {
         await _serviceManager.ProductService.UpdateProduct(id, productDto);
         return Ok(productDto);
     }
     
     
-    [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete(int id)
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
     {
         await _serviceManager.ProductService.DeleteProduct(id);
         return Ok();

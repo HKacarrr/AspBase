@@ -32,14 +32,14 @@ public class ProductService : AbstractService<Product>
     }
     
 
-    public async Task<ProductDto> GetProductById(int id)
+    public async Task<ProductDto> GetProductById(Guid id)
     {
         var product = await CheckProduct(id);
         return Mapper.Map<ProductDto>(product);
     }
 
 
-    public async Task UpdateProduct(int id, ProductDto productDto)
+    public async Task UpdateProduct(Guid id, ProductDto productDto)
     {
         var updatingProduct = await CheckProduct(id);
         Mapper.Map(productDto, updatingProduct);
@@ -48,7 +48,7 @@ public class ProductService : AbstractService<Product>
     }
 
 
-    public async Task DeleteProduct(int id)
+    public async Task DeleteProduct(Guid id)
     {
         var deletingProduct = await CheckProduct(id);
         Repository.Delete(deletingProduct);
@@ -56,7 +56,7 @@ public class ProductService : AbstractService<Product>
     }
 
 
-    private async Task<Product> CheckProduct(int id)
+    private async Task<Product> CheckProduct(Guid id)
     {
         var product = await Repository.FindOneByAsync(p => p.Id.Equals(id));
         if (product is null)
