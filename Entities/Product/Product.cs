@@ -2,6 +2,9 @@ using Entities.Common;
 
 namespace Entities.Product;
 
+using Entities.Category;
+
+
 public class Product : DatetimeProvider
 {
     public string? Title { get; set; }
@@ -9,4 +12,8 @@ public class Product : DatetimeProvider
     public string? Description { get; set; }
     
     public decimal Price { get; set; }
+
+    public Guid CategoryId { get; set; }
+
+    public Category Category { get; set; }
 }
