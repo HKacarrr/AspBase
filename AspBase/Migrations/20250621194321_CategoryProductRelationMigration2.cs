@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AspBase.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class CategoryProductRelationMigration2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,10 @@ namespace AspBase.Migrations
                 name: "a_roles");
 
             migrationBuilder.EnsureSchema(
-                name: "product");
+                name: "c_category");
+
+            migrationBuilder.EnsureSchema(
+                name: "p_product");
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
@@ -63,20 +66,19 @@ namespace AspBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "product",
-                schema: "product",
+                name: "category",
+                schema: "c_category",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: true),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    active = table.Column<bool>(type: "boolean", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_product", x => x.Id);
+                    table.PrimaryKey("PK_category", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -196,6 +198,31 @@ namespace AspBase.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "product",
+                schema: "p_product",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_product", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_product_category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalSchema: "c_category",
+                        principalTable: "category",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 schema: "a_user",
@@ -239,6 +266,12 @@ namespace AspBase.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_product_CategoryId",
+                schema: "p_product",
+                table: "product",
+                column: "CategoryId");
         }
 
         /// <inheritdoc />
@@ -266,7 +299,7 @@ namespace AspBase.Migrations
 
             migrationBuilder.DropTable(
                 name: "product",
-                schema: "product");
+                schema: "p_product");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles",
@@ -275,6 +308,10 @@ namespace AspBase.Migrations
             migrationBuilder.DropTable(
                 name: "AspNetUsers",
                 schema: "a_user");
+
+            migrationBuilder.DropTable(
+                name: "category",
+                schema: "c_category");
         }
     }
 }

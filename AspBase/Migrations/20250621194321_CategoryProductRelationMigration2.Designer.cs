@@ -12,8 +12,8 @@ using Repositories.Config.Context;
 namespace AspBase.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20250617165922_CategorySchemaMigration")]
-    partial class CategorySchemaMigration
+    [Migration("20250621194321_CategoryProductRelationMigration2")]
+    partial class CategoryProductRelationMigration2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,6 +54,9 @@ namespace AspBase.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -70,6 +73,8 @@ namespace AspBase.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("product", "p_product");
                 });
@@ -270,6 +275,17 @@ namespace AspBase.Migrations
                     b.ToTable("AspNetUserTokens", "a_user");
                 });
 
+            modelBuilder.Entity("Entities.Product.Product", b =>
+                {
+                    b.HasOne("Entities.Category.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -319,6 +335,11 @@ namespace AspBase.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Entities.Category.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
