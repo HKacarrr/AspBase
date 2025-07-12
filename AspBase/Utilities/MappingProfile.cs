@@ -1,4 +1,6 @@
 using Entities.DTO.Auth;
+using Entities.DTO.Auth.Profile;
+using Entities.DTO.Auth.User;
 using Entities.DTO.Category;
 using Entities.DTO.Product;
 using Entities.Models.Auth;
@@ -19,6 +21,8 @@ public class MappingProfile : Profile
         CreateMap<CreateCategoryDto, Category>().ReverseMap();
         
         CreateMap<UserDto, User>().ReverseMap();
+        CreateMap<UserRegistrationDto, User>().ReverseMap();
         CreateMap<ProfileDto, Profile>().ReverseMap();
+        CreateMap<ProfileRegistrationDto, Profile>().ReverseMap();
     }
 }
