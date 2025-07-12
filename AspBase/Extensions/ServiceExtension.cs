@@ -1,9 +1,12 @@
+using Entities.Models.Auth;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Config;
 using Repositories.Config.Context;
+using Repositories.Models.Auth;
 using Repositories.Models.Category;
 using Repositories.Models.Product;
 using Services.Category;
@@ -25,6 +28,8 @@ public static class ServiceExtension
         serviceCollection.AddScoped<RepositoryManager>();
         serviceCollection.AddScoped<ProductRepository>();
         serviceCollection.AddScoped<CategoryRepository>();
+        serviceCollection.AddScoped<UserRepository>();
+        serviceCollection.AddScoped<ProfileRepository>();
     }
 
 
@@ -60,5 +65,25 @@ public static class ServiceExtension
                 xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.btkakademi.apiroot+xml");
             }
         });
+    }
+
+
+    public static void ConfigureIdentity(this IServiceCollection services)
+    {
+        var builder = services.AddIdentity<User, IdentityRole>(opts =>
+            {
+                /** Password Requireds */
+                opts.Password.RequireDigit = true;
+                opts.Password.RequireLowercase = true;
+                opts.Password.RequireUppercase = true;
+                opts.Password.RequireNonAlphanumeric = true;
+                opts.Password.RequiredLength = 6;
+
+
+                /** User Requireds */
+                opts.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<RepositoryContext>()
+            .AddDefaultTokenProviders();
     }
 }

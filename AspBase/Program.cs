@@ -12,6 +12,7 @@ builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.RegisterRepositories();
 builder.Services.AddAutoMapper(typeof(Program).Assembly); // For DTO map with entity structures
 
+
 // Services Configuration
 builder.Services.ConfigureServices();
 builder.Services.RegisterServices();
@@ -24,6 +25,11 @@ builder.Services.AddCustomMediaTypes();
 // Swagger middleware
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+// Identity Configuration
+builder.Services.AddAuthentication();
+builder.Services.ConfigureIdentity();
 
 
 
@@ -47,7 +53,7 @@ app.UseHttpsRedirection();
 // app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 // app.MapControllerRoute(

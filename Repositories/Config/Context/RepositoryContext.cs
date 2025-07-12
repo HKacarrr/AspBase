@@ -1,5 +1,6 @@
 using System.Reflection;
 using Entities.Common;
+using Entities.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Repositories.Config.Context;
 
-public class RepositoryContext : IdentityDbContext
+public class RepositoryContext : IdentityDbContext<User>
 {
     public RepositoryContext(DbContextOptions options) : base(options)
     {}
@@ -16,6 +17,8 @@ public class RepositoryContext : IdentityDbContext
     /** Entity Set with DbSet */
     public DbSet<Entities.Models.Product.Product> Product { get; set; }
     public DbSet<Entities.Models.Category.Category> Category { get; set; }
+    public DbSet<User> User { get; set; }
+    public DbSet<Profile> Profile { get; set; }
     /** */
     
 
@@ -73,6 +76,7 @@ public class RepositoryContext : IdentityDbContext
         modelBuilder.Entity<IdentityUserLogin<string>>(b => b.ToTable("AspNetUserLogins", schema));
         modelBuilder.Entity<IdentityRoleClaim<string>>(b => b.ToTable("AspNetRoleClaims", schema));
         modelBuilder.Entity<IdentityUserToken<string>>(b => b.ToTable("AspNetUserTokens", schema));
+        modelBuilder.Entity<Profile>(b => b.ToTable("Profile", schema));
     }
     
     private void ConfigureRoleSchemas(ModelBuilder modelBuilder)
