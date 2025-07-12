@@ -71,7 +71,7 @@ public class RepositoryContext : IdentityDbContext<User>
     private void ConfigureUserSchemas(ModelBuilder modelBuilder)
     {
         var schema = "a_user";
-        modelBuilder.Entity<IdentityUser>(b => b.ToTable("AspNetUsers", schema));
+        modelBuilder.Entity<User>(b => b.ToTable("AspNetUsers", schema));
         modelBuilder.Entity<IdentityUserClaim<string>>(b => b.ToTable("AspNetUserClaims", schema));
         modelBuilder.Entity<IdentityUserLogin<string>>(b => b.ToTable("AspNetUserLogins", schema));
         modelBuilder.Entity<IdentityRoleClaim<string>>(b => b.ToTable("AspNetRoleClaims", schema));

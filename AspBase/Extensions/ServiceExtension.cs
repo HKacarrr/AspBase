@@ -9,6 +9,8 @@ using Repositories.Config.Context;
 using Repositories.Models.Auth;
 using Repositories.Models.Category;
 using Repositories.Models.Product;
+using Services.Auth;
+using Services.Auth.Profile;
 using Services.Category;
 using Services.Config;
 using Services.Product;
@@ -30,6 +32,11 @@ public static class ServiceExtension
         serviceCollection.AddScoped<CategoryRepository>();
         serviceCollection.AddScoped<UserRepository>();
         serviceCollection.AddScoped<ProfileRepository>();
+        
+        // Interface mappings for services
+        serviceCollection.AddScoped<IBaseRepository<User>, UserRepository>();
+        serviceCollection.AddScoped<IBaseRepository<Entities.Models.Auth.Profile>, ProfileRepository>();
+        serviceCollection.AddScoped<IBaseRepository<Profile>, ProfileRepository>();
     }
 
 
@@ -42,6 +49,8 @@ public static class ServiceExtension
     {
         serviceCollection.AddScoped<ProductService, ProductService>();
         serviceCollection.AddScoped<CategoryService, CategoryService>();
+        serviceCollection.AddScoped<AuthenticationService, AuthenticationService>();
+        serviceCollection.AddScoped<ProfileService, ProfileService>();
     }
     
     

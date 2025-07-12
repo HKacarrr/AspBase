@@ -1,4 +1,3 @@
-using Entities.DTO.Auth;
 using Entities.DTO.Auth.Profile;
 using Entities.DTO.Auth.User;
 using Entities.DTO.Category;
@@ -6,11 +5,11 @@ using Entities.DTO.Product;
 using Entities.Models.Auth;
 using Entities.Models.Category;
 using Entities.Models.Product;
-using Profile = AutoMapper.Profile;
+using AutoMapperProfile = AutoMapper.Profile;
 
 namespace AspBase.Utilities;
 
-public class MappingProfile : Profile
+public class MappingProfile : AutoMapperProfile
 {
     public MappingProfile()
     {
@@ -22,6 +21,7 @@ public class MappingProfile : Profile
         
         CreateMap<UserDto, User>().ReverseMap();
         CreateMap<UserRegistrationDto, User>().ReverseMap();
+        
         CreateMap<ProfileDto, Profile>().ReverseMap();
         CreateMap<ProfileRegistrationDto, Profile>().ReverseMap();
     }
