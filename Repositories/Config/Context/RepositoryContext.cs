@@ -14,8 +14,8 @@ public class RepositoryContext : IdentityDbContext
     
     
     /** Entity Set with DbSet */
-    public DbSet<Entities.Product.Product> Product { get; set; }
-    public DbSet<Entities.Category.Category> Category { get; set; }
+    public DbSet<Entities.Models.Product.Product> Product { get; set; }
+    public DbSet<Entities.Models.Category.Category> Category { get; set; }
     /** */
     
 
@@ -83,12 +83,12 @@ public class RepositoryContext : IdentityDbContext
     
     private void ConfigureProductSchemas(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Entities.Product.Product>().ToTable("product", "p_product");
+        modelBuilder.Entity<Entities.Models.Product.Product>().ToTable("product", "p_product");
     }
     
     
     private void ConfigureCategorySchemas(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Entities.Category.Category>().ToTable("category", "c_category");
+        modelBuilder.Entity<Entities.Models.Category.Category>().ToTable("category", "c_category");
     }
 }

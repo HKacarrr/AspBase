@@ -1,6 +1,6 @@
 using Entities.Common;
 
-namespace Entities.Category;
+namespace Entities.Models.Category;
 
 public class Category : DatetimeProvider
 {

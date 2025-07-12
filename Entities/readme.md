@@ -2,7 +2,8 @@
 
 ## 📁 Genel Yapı
 
-Her **Entity** (varlık) için bir klasör oluşturulmalıdır. Bu klasör içerisinde o entity'ye ait tüm dosyalar yer almalıdır.
+Her **Entity** (varlık) için bir klasör oluşturulmalıdır. Bu klasör içerisinde o entity'ye ait tüm dosyalar yer almalıdır. 
+Sistem içindeki entity yapıları Models klasörü altında toplanmalıdır
 
 ### ✅ Yapı Kuralları
 

@@ -1,5 +1,5 @@
 using Repositories.Config.Context;
-using Repositories.Product;
+using Repositories.Models.Product;
 
 namespace Repositories.Config;
 

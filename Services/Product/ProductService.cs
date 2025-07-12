@@ -1,13 +1,12 @@
 using AutoMapper;
 using Entities.DTO.Product;
 using Entities.Exceptions;
-using Repositories.Category;
-using Repositories.Product;
+using Repositories.Models.Category;
+using Repositories.Models.Product;
 
 namespace Services.Product;
-using Entities.Product;
 
-public class ProductService : AbstractService<Product>
+public class ProductService : AbstractService<Entities.Models.Product.Product>
 {
     private readonly CategoryRepository _categoryRepository;
     
@@ -29,7 +28,7 @@ public class ProductService : AbstractService<Product>
     public async Task<CreateProductDto> CreateProduct(CreateProductDto createProductDto)
     {
         await CheckCategory(createProductDto.CategoryId);
-        var product = Mapper.Map<Product>(createProductDto);
+        var product = Mapper.Map<Entities.Models.Product.Product>(createProductDto);
         await Repository.AddAsync(product);
         Repository.SaveAsync();
 
@@ -62,7 +61,7 @@ public class ProductService : AbstractService<Product>
     }
 
 
-    private async Task<Product> CheckProduct(Guid id)
+    private async Task<Entities.Models.Product.Product> CheckProduct(Guid id)
     {
         var product = await Repository.FindOneByAsync(p => p.Id.Equals(id));
         if (product is null)

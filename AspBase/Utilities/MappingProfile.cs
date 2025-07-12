@@ -1,8 +1,8 @@
 using AutoMapper;
-using Entities.Category;
 using Entities.DTO.Category;
 using Entities.DTO.Product;
-using Entities.Product;
+using Entities.Models.Category;
+using Entities.Models.Product;
 
 namespace AspBase.Utilities;
 

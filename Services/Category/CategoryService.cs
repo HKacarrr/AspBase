@@ -1,13 +1,12 @@
+using Repositories.Models.Category;
+
 namespace Services.Category;
 
-using Entities.Category;
 using AutoMapper;
 using Entities.DTO.Category;
 using Repositories;
-using Repositories.Category;
 
-
-public class CategoryService : AbstractService<Category>
+public class CategoryService : AbstractService<Entities.Models.Category.Category>
 {
     public CategoryService(CategoryRepository repository, IMapper mapper) : base(repository, mapper)
     {
@@ -23,7 +22,7 @@ public class CategoryService : AbstractService<Category>
 
     public async Task<CreateCategoryDto> CreateCategory(CreateCategoryDto createCategoryDto)
     {
-        var category = Mapper.Map<Category>(createCategoryDto);
+        var category = Mapper.Map<Entities.Models.Category.Category>(createCategoryDto);
         await Repository.AddAsync(category);
         Repository.SaveAsync();
 
@@ -58,7 +57,7 @@ public class CategoryService : AbstractService<Category>
     }
 
 
-    private async Task<Category> CheckCategory(Guid id)
+    private async Task<Entities.Models.Category.Category> CheckCategory(Guid id)
     {
         var category = await Repository.FindOneByAsync(c => c.Id.Equals(id));
         if (category is null)

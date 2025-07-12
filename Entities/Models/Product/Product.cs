@@ -1,9 +1,6 @@
 using Entities.Common;
 
-namespace Entities.Product;
-
-using Entities.Category;
-
+namespace Entities.Models.Product;
 
 public class Product : DatetimeProvider
 {
@@ -15,5 +12,5 @@ public class Product : DatetimeProvider
 
     public Guid CategoryId { get; set; }
 
-    public Category Category { get; set; }
+    public Category.Category Category { get; set; }
 }
