@@ -1,6 +1,7 @@
 using Entities.DTO.Auth;
 using Entities.DTO.Auth.User;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.ActionFilters.Validation;
 using Services.Config;
 
 namespace Presentation.Auth;
@@ -19,6 +20,7 @@ public class AuthController : AbstractAuthController
 
     [HttpPost]
     [Route("register")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> Create(AuthDto authDto)
     {
         var userDto = await _serviceManager.AuthenticationService.RegisterUser(authDto);
