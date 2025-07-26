@@ -8,6 +8,7 @@ namespace Presentation.Auth;
 
 
 [ApiController]
+[ServiceFilter(typeof(ValidationFilterAttribute))]
 public class AuthController : AbstractAuthController
 {
     private readonly ServiceManager _serviceManager;
@@ -20,10 +21,17 @@ public class AuthController : AbstractAuthController
 
     [HttpPost]
     [Route("register")]
-    [ServiceFilter(typeof(ValidationFilterAttribute))]
-    public async Task<IActionResult> Create(AuthDto authDto)
+    public async Task<IActionResult> Register(AuthDto authDto)
     {
         var userDto = await _serviceManager.AuthenticationService.RegisterUser(authDto);
         return Ok(userDto);
+    }
+
+
+    [HttpPost]
+    [Route("login")]
+    public async Task<IActionResult> Login()
+    {
+        return Ok();
     }
 }

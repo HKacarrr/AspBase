@@ -33,7 +33,7 @@ builder.Services.AddSwaggerGen();
 
 
 // Identity Configuration
-builder.Services.AddAuthentication();
+builder.Services.ConfigureJwt(configuration: builder.Configuration);
 builder.Services.ConfigureIdentity();
 
 
