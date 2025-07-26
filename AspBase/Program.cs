@@ -1,17 +1,22 @@
 using AspBase.Extensions;
 using AspBase.Extensions.Middleware;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+        
+});
 
 // Entity and Repository configuration
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.RegisterRepositories();
 builder.Services.AddAutoMapper(typeof(Program).Assembly); // For DTO map with entity structures
-
 
 // Services Configuration
 builder.Services.ConfigureServices();
@@ -32,11 +37,31 @@ builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 
 
+// Action Filters
+builder.Services.ConfigureActionFilters();
+
+
+// Cors Settings
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact",
+        policy => policy
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
+
 
 var app = builder.Build();
 
 // Middlewares
 app.ConfigureExceptionHandler();
+
+
+// Cors Settings
+app.UseCors("AllowReact");
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

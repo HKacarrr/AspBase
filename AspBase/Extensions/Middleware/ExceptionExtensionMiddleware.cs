@@ -17,7 +17,6 @@ public static class ExceptionExtensionMiddleware
                 context.Response.ContentType = "application/json";
 
                 var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-                Console.WriteLine("Test Deneme");
                 if (contextFeature is not null)
                 {
                     /** Status code değerinin dinamik olarak alınması */

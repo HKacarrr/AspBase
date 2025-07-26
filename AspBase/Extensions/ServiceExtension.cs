@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
+using Presentation.ActionFilters.Validation;
 using Repositories;
 using Repositories.Config;
 using Repositories.Config.Context;
@@ -94,5 +95,11 @@ public static class ServiceExtension
             })
             .AddEntityFrameworkStores<RepositoryContext>()
             .AddDefaultTokenProviders();
+    }
+
+
+    public static void ConfigureActionFilters(this IServiceCollection services)
+    {
+        services.AddScoped<ValidationFilterAttribute>();
     }
 }
