@@ -30,8 +30,15 @@ public class AuthController : AbstractAuthController
 
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> Login()
+    public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
     {
-        return Ok();
+        if (!await _serviceManager.AuthenticationService.Login(loginDto))
+            return Unauthorized();
+        
+        
+        return Ok(new
+        {
+            Token = await _serviceManager.AuthenticationService.CreateToken()
+        });
     }
 }

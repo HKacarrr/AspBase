@@ -1,10 +1,13 @@
 using Entities.DTO.Category;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Config;
 
 namespace Presentation.Category;
 
 [ApiController]
+[Route("api/categories")]
+[Authorize]
 public class CategoryController : AbstractCategoryController
 {
     private readonly ServiceManager _serviceManager;

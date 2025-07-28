@@ -33,8 +33,8 @@ builder.Services.AddSwaggerGen();
 
 
 // Identity Configuration
-builder.Services.ConfigureJwt(configuration: builder.Configuration);
 builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJwt(configuration: builder.Configuration);
 
 
 // Action Filters
@@ -74,10 +74,11 @@ if (!app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 // app.UseStaticFiles();
 
 app.UseRouting();
+// app.UseStatusCodePages();
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -1,10 +1,13 @@
 using Entities.DTO.Product;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Config;
 
 namespace Presentation.Product;
 
 [ApiController]
+[Route("api/products")]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class ProductController : AbstractProductController
 {
     private readonly ServiceManager _serviceManager;
