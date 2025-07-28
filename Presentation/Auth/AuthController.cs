@@ -1,5 +1,6 @@
 using Entities.DTO.Auth;
 using Entities.DTO.Auth.User;
+using Entities.DTO.Security;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ActionFilters.Validation;
 using Services.Config;
@@ -35,10 +36,17 @@ public class AuthController : AbstractAuthController
         if (!await _serviceManager.AuthenticationService.Login(loginDto))
             return Unauthorized();
         
-        
-        return Ok(new
-        {
-            Token = await _serviceManager.AuthenticationService.CreateToken()
-        });
+        var tokenDto = await _serviceManager.AuthenticationService.CreateToken(true);
+        return Ok(tokenDto);
+    }
+
+    
+    [HttpPost]
+    [Route("refresh-token")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> RefreshToken([FromBody]TokenDto tokenDto)
+    {
+        var tokenDtoToReturn = await _serviceManager.AuthenticationService.RefreshToken(tokenDto);
+        return Ok(tokenDtoToReturn);
     }
 }
