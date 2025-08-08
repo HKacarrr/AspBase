@@ -1,6 +1,6 @@
 using Entities.Common;
 
-namespace Entities.Models.Workspace;
+namespace Entities.Models.Workspace.Providers;
 
 public class WorkspaceProvider : DatetimeProvider
 {   
