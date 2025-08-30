@@ -17,7 +17,7 @@ public class WorkspaceService : AbstractWorkspaceService<Entities.Models.Workspa
     }
     
     
-    public async Task<CreateWorkspaceDto> CreateProduct(CreateWorkspaceDto createWorkspaceDto)
+    public async Task<CreateWorkspaceDto> CreateWorkspace(CreateWorkspaceDto createWorkspaceDto)
     {
         var workspace = Mapper.Map<Entities.Models.Workspace.Workspace>(createWorkspaceDto);
         await Repository.AddAsync(workspace);

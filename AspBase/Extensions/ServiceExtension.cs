@@ -1,5 +1,6 @@
 using System.Text;
 using Entities.Models.Auth;
+using Entities.Models.Workspace;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,13 @@ using Repositories.Config.Context;
 using Repositories.Models.Auth;
 using Repositories.Models.Category;
 using Repositories.Models.Product;
+using Repositories.Models.Workspace;
 using Services.Auth;
 using Services.Auth.Profile;
 using Services.Category;
 using Services.Config;
 using Services.Product;
+using Services.Workspace;
 
 namespace AspBase.Extensions;
 
@@ -39,8 +42,8 @@ public static class ServiceExtension
         
         // Interface mappings for services
         serviceCollection.AddScoped<IBaseRepository<User>, UserRepository>();
-        serviceCollection.AddScoped<IBaseRepository<Entities.Models.Auth.Profile>, ProfileRepository>();
         serviceCollection.AddScoped<IBaseRepository<Profile>, ProfileRepository>();
+        serviceCollection.AddScoped<IBaseRepository<Workspace>, WorkspaceRepository>();
     }
 
 
@@ -55,6 +58,7 @@ public static class ServiceExtension
         serviceCollection.AddScoped<CategoryService, CategoryService>();
         serviceCollection.AddScoped<AuthenticationService, AuthenticationService>();
         serviceCollection.AddScoped<ProfileService, ProfileService>();
+        serviceCollection.AddScoped<WorkspaceService, WorkspaceService>();
     }
     
     
