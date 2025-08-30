@@ -1,5 +1,6 @@
 using Entities.Models.Auth;
 using Entities.Models.Workspace.Providers;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models.Team;
 
@@ -12,13 +13,14 @@ public class Team : WorkspaceProvider
     public string? Logo { get; set; }
     
     public string? Uuid { get; set; }
-    
+
     /** Relations */
-    public string? UserId { get; set; }
-    
+    [ForeignKey(nameof(CreatedUser))]
+    public string? CreatedUserId { get; set; }   // <-- "UserId" yerine navigation ile eş ad
+
     public User? CreatedUser { get; set; }
-    
-    public ICollection<TeamRole>? TeamRoles { get; set; }
+
+    public ICollection<TeamMemberRole>? TeamRoles { get; set; }
     
     public ICollection<TeamInvite>? TeamInvites { get; set; }
     

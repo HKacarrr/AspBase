@@ -4,5 +4,5 @@ public class TeamAndTeamRoleProvider : TeamProvider
 {
     public Guid TeamRoleId { get; set; }
     
-    public TeamRole? TeamRole { get; set; }
+    public TeamMemberRole? TeamRole { get; set; }
 }

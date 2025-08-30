@@ -1,5 +1,6 @@
 using Entities.Common;
 using Entities.Models.Auth;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models.Workspace;
 
@@ -18,10 +19,10 @@ public class Workspace : DatetimeProvider
     public string? Website { get; set; }
     
     public bool? Enable { get; set; }
-    
+
     /** Relations */
-    public Guid CreatedUserId { get; set; }
-    
+    [ForeignKey(nameof(CreatedUser))]
+    public string? CreatedUserId { get; set; }   // <-- Guid yerine string; User.Id ile aynı tip olmalı
+
     public User? CreatedUser { get; set; }
-    
 }

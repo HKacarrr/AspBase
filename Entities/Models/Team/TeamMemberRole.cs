@@ -2,7 +2,7 @@ using Entities.Models.Team.Providers;
 
 namespace Entities.Models.Team;
 
-public class TeamRole : TeamProvider
+public class TeamMemberRole : TeamProvider
 {
     public string? Title { get; set; }
     

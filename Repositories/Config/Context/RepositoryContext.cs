@@ -1,6 +1,8 @@
 using System.Reflection;
 using Entities.Common;
 using Entities.Models.Auth;
+using Entities.Models.Team;
+using Entities.Models.Workspace;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +21,18 @@ public class RepositoryContext : IdentityDbContext<User>
     public DbSet<Entities.Models.Category.Category> Category { get; set; }
     public DbSet<User> User { get; set; }
     public DbSet<Profile> Profile { get; set; }
+    
+    /** Workspace */
+    public DbSet<Workspace> Workspace { get; set; }
+    public DbSet<WorkspaceMember> WorkspaceMember { get; set; }
+    public DbSet<WorkspaceInvite> WorkspaceInvite { get; set; }
+    public DbSet<WorkspaceMemberRole> WorkspaceMemberRole { get; set; }
+    
+    /** Team */
+    public DbSet<Team> Team { get; set; }
+    public DbSet<TeamMember> TeamMember { get; set; }
+    public DbSet<TeamInvite> TeamInvite { get; set; }
+    public DbSet<TeamMemberRole> TeamMemberRole { get; set; }
     /** */
     
 
@@ -66,6 +80,8 @@ public class RepositoryContext : IdentityDbContext<User>
         ConfigureUserSchemas(modelBuilder);
         ConfigureRoleSchemas(modelBuilder);
         ConfigureCategorySchemas(modelBuilder);
+        ConfigureWorkspaceSchemas(modelBuilder);
+        ConfigureTeamSchemas(modelBuilder);
     }
 
     private void ConfigureUserSchemas(ModelBuilder modelBuilder)
@@ -94,5 +110,25 @@ public class RepositoryContext : IdentityDbContext<User>
     private void ConfigureCategorySchemas(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Entities.Models.Category.Category>().ToTable("category", "c_category");
+    }
+
+
+    private void ConfigureWorkspaceSchemas(ModelBuilder modelBuilder)
+    {
+        var schema = "w_workspace";
+        modelBuilder.Entity<Workspace>(b => b.ToTable("workspaces", schema));
+        modelBuilder.Entity<WorkspaceMember>(b => b.ToTable("workspace_members", schema));
+        modelBuilder.Entity<WorkspaceInvite>(b => b.ToTable("workspace_invites", schema));
+        modelBuilder.Entity<WorkspaceMemberRole>(b => b.ToTable("workspace_member_roles", schema));
+    }
+    
+
+    private void ConfigureTeamSchemas(ModelBuilder modelBuilder)
+    {
+        var schema = "t_team";
+        modelBuilder.Entity<Team>(b => b.ToTable("teams", schema));
+        modelBuilder.Entity<TeamMember>(b => b.ToTable("team_members", schema));
+        modelBuilder.Entity<TeamInvite>(b => b.ToTable("team_invites", schema));
+        modelBuilder.Entity<TeamMemberRole>(b => b.ToTable("team_member_roles", schema));
     }
 }
